@@ -7,6 +7,17 @@ services:
 before_install:
     - docker build -t kunalpiplani12/docker-react -f dockerfile.dev .
 
+script:
+    - docker run -e CI=true kunalpiplani12/docker-react npm run test
 
 
+deploy:
+    provide: elasticbeanstalk 
+    region: "us-east-2"
+    app: "docker"
+    env:  "docker-env"   
+    bucket_name: "elasticbeanstalk-us-east-2-168143117927"
+    bucket_path: "docker"
 
+on:
+ branch: master
